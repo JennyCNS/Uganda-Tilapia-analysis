@@ -8,7 +8,7 @@ Map for plotting sampling locations / pluvial information in Uganda
 #
 # Jenny Nascimento-Schulze
 #
-# Roslin
+# Roslin 2022
 #
 #======================================
 
@@ -18,19 +18,10 @@ Map for plotting sampling locations / pluvial information in Uganda
 #library(installr)
 #updateR()
 
-install.packages("mapdata")
-install.packages("ggsn")
-install.packages("rnaturalearth")
-install.packages("rnaturalearthdata")
-install.packages("ggspatial")
-install.packages("ggrepel")
-install.packages("rworldmap")
-install.packages("devtools")
-install.packages("ggplot2","mapdata","ggrepel","rworldmap","rworldxtra",
-                 "rgdal","cowplot")
 lib = c("ggplot2","RColorBrewer","mapdata","ggrepel","rworldmap","rworldxtra",
         "rgdal","cowplot")
 lapply(lib, library, character.only=TRUE)
+#+
 library(ggplot2)
 library(rnaturalearth)
 library(rnaturalearthdata)
@@ -44,6 +35,7 @@ devtools::install_github("ropensci/rnaturalearthhires")
 ## Import maps from online repository
 
 library(sf)
+library(rnaturalearthhires)
 
 #world lakes
 
@@ -56,7 +48,7 @@ download.file(url, paste0(path, "/lakes.zip"))
 unzip(paste0(path, "/lakes.zip"))
 lakes <- read_sf("ne_10m_lakes.shp")
 
-#pluvial lakes - not needed for this map
+#pluvial lakes - not needed for this map but in case I ever need it
 
 url <- paste0("https://www.naturalearthdata.com/",
               "http//www.naturalearthdata.com/download/10m/physical/",
@@ -151,8 +143,6 @@ zoomed <- ggplot() +
           mapping = aes(geometry = geometry),
           color = "gray",
           fill = "lightgray")  +
- 
- 
 
   geom_sf(data = rivers, #main rivers
           mapping = aes(geometry = geometry),
@@ -163,7 +153,6 @@ zoomed <- ggplot() +
           mapping = aes(geometry = geometry),
           color = "gray",
           fill = "lightblue")  +
-
  
   geom_sf(data = lakes4, #uganda lakes
           mapping = aes(geometry = geometry),
